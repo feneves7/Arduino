@@ -48,6 +48,7 @@ void setup()
  
 void loop() 
 {
+  Serial.flush();
 //  for(val = 255; val > 0; val --){ //PARA val IGUAL A 255, ENQUANTO val MAIOR QUE 0, DECREMENTA val
 //      analogWrite(pinoRed, val); //PINO RECEBE O VALOR
 //      analogWrite(pinoBlue, 255-val); //PINO RECEBE O VALOR
@@ -76,6 +77,10 @@ void loop()
   Serial.print("UID da tag :");
   String conteudo= "";
   byte letra;
+
+
+
+  
   for (byte i = 0; i < mfrc522.uid.size; i++) 
   {
      Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
@@ -108,8 +113,7 @@ void loop()
     delay(3000);
     mensageminicial();
   }
- 
-  if (conteudo.substring(1) == "EC 5C 65 55") //UID 2 - Cartao
+  else if (conteudo.substring(1) == "EC 5C 65 55") //UID 2 - Cartao
   {
     Serial.println("Ola Cartao !");
     Serial.println();
@@ -129,6 +133,13 @@ void loop()
     delay(3000);
     mensageminicial();
   }
+  else{
+    delay(3000);
+    Serial.flush();
+    mensageminicial(); 
+  }
+
+ 
 } 
  
 void mensageminicial()
